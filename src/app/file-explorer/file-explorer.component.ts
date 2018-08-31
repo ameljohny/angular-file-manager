@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material/dialog';
 import { NewFolderDialogComponent } from './modals/newFolderDialog/newFolderDialog.component';
 import { RenameDialogComponent } from './modals/renameDialog/renameDialog.component';
+// import { filedir } from './model/filedir';
 
 @Component({
   selector: 'file-explorer',
@@ -13,8 +14,22 @@ import { RenameDialogComponent } from './modals/renameDialog/renameDialog.compon
 })
 export class FileExplorerComponent {
   constructor(public dialog: MatDialog) {}
-
+  data = [
+    {
+       "name":'fold1',
+       "type":false
+    },
+    {
+       "name":'fold2',
+       "type":true
+    },
+    {
+       "name":'fold3',
+       "type":false
+    }
+ ]
   @Input() fileElements: FileElement[];
+  // @Input() files: filedir[];
   @Input() canNavigateUp: string;
   @Input() path: string;
 

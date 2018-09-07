@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 export interface IFileService {
   add(fileElement: FileElement);
+  initiate(fileElement: FileElement[]);
   delete(id: string);
   update(id: string, update: Partial<FileElement>);
   queryInFolder(folderId: string): Observable<FileElement[]>;
@@ -17,10 +18,24 @@ export interface IFileService {
 export class FileService implements IFileService {
   private map = new Map<string, FileElement>();
 
-  constructor() {}
+  constructor() {
+    let directory: FileElement[] = [
+       {'id':'111','name': 'file1 ', 'type':true, 'parent':'root'},{'id':'222','name': 'File2', 'type':false, 'parent':'root'},{'id':'333','name': 'file inside', 'type':false, 'parent':'111'}
+
+  ];
+  console.log(directory);
+  this.initiate(directory);  
+}
+  // [{'id':'111','name': 'file1 ', 'type':true, 'parent':'root'},{'id':'222','name': 'File2', 'type':false, 'parent':'root'},{'id':'333','name': 'file inside', 'type':false, 'parent':'111'}]
+  initiate(fileElement: FileElement[]) {
+    fileElement.forEach(element => {
+      this.add(element);
+    });
+  }
 
   add(fileElement: FileElement) {
-    fileElement.id = v4();
+    console.log(fileElement);
+    // fileElement.id = v4();
     this.map.set(fileElement.id, this.clone(fileElement));
     return fileElement;
   }

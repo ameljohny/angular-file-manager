@@ -1,4 +1,4 @@
-export class FileElement {
+export class filedir {
     name: string;
     type: string ;
     time?: any ;

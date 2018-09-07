@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { MatDialog } from '@angular/material/dialog';
 import { NewFolderDialogComponent } from './modals/newFolderDialog/newFolderDialog.component';
 import { RenameDialogComponent } from './modals/renameDialog/renameDialog.component';
+
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { filedir } from './model/filedir';
 
 @Component({
@@ -13,26 +16,40 @@ import { RenameDialogComponent } from './modals/renameDialog/renameDialog.compon
   styleUrls: ['./file-explorer.component.css']
 })
 export class FileExplorerComponent {
-  constructor(public dialog: MatDialog) {}
-  data = [
-    {
-       "name":'fold1',
-       "type":false
-    },
-    {
-       "name":'fold2',
-       "type":true
-    },
-    {
-       "name":'fold3',
-       "type":false
-    }
- ]
+  albums : any;
+  fileslist : any;
+  filePath = {name : '/'};
+  
+  constructor(public dialog: MatDialog, private http: HttpClient, private router: Router) {}
+  ngOnInit() {
+    // const httpOptions = {
+    //    headers: new HttpHeaders({ 'Authorization': sessionStorage.getItem('jwtToken') })
+    //  };
+    //  this.http.get('/api/vids/', httpOptions).subscribe(data => {
+    //    this.albums = data;
+    //    this.fileslist = this.albums.filter(function (el) {
+    //      if(el.type === 'd'){
+    //        el.type = true;
+    //      } else {
+    //       el.type = false;
+    //      }
+    //      console.log(el);
+    //      return el ;
+
+    //    });
+    //  }, err => {
+    //    if (err.status === 401) {
+    //      this.router.navigate(['login']);
+    //    }
+    //  });
+    // this.fileslist =[{'name': "File1", 'type': true, 'parent': 'root'},{'name': "File2", 'type': true, 'parent': 'root'},{'name': "File3", 'type': true, 'parent': 'root'}]; 
+   }
+  
   @Input() fileElements: FileElement[];
   // @Input() files: filedir[];
   @Input() canNavigateUp: string;
   @Input() path: string;
-
+   
   @Output() folderAdded = new EventEmitter<{ name: string }>();
   @Output() elementRemoved = new EventEmitter<FileElement>();
   @Output() elementRenamed = new EventEmitter<FileElement>();
@@ -43,11 +60,34 @@ export class FileExplorerComponent {
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
   }
+  currentPath = '';
 
-  navigate(element: FileElement) {
-    if (element.isFolder) {
-      this.navigatedDown.emit(element);
-    }
+  navigate(element: any) {
+    
+  //   if (element.type) {
+  //     console.log('filePath' + this.filePath.name);
+  //     this.filePath.name = this.filePath.name + '/'+ element.name; 
+  //     console.log('ConcatinatedfilePath' + this.filePath.name)
+  //     const httpOptions = {
+  //     headers: new HttpHeaders({ 'Authorization': sessionStorage.getItem('jwtToken') })
+  //   };
+  //   // const formData = new FormData();
+  //   // formData.append('selected', this.selected.so);
+  //   let selected = {name: 'defaultname'};
+  //   selected.name = element.name;
+  //   console.log(this.path);
+  //   this.http.post('/api/navigateFolder', this.filePath , httpOptions).subscribe(resp => {
+  //     console.log('filePathObjecct' + this.filePath)
+  //  this.fileslist = resp;
+  //  console.log(resp);
+  //   }, err => {
+  //   });
+    
+
+      
+  //   }
+  console.log('navigate function' + element.viewChild + element.name);
+    this.navigatedDown.emit(element);
   }
 
   navigateUp() {
